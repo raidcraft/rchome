@@ -2,6 +2,7 @@ package de.raidcraft.rchome;
 
 import de.raidcraft.api.BasePlugin;
 import de.raidcraft.api.config.ConfigurationBase;
+import de.raidcraft.api.config.Setting;
 import de.raidcraft.rchome.commands.RCHomeCommands;
 import de.raidcraft.rchome.listener.PlayerListener;
 import de.raidcraft.rchome.tables.PlayerHomesTable;
@@ -11,7 +12,7 @@ import de.raidcraft.rchome.tables.PlayerHomesTable;
  */
 public class RCHomePlugin extends BasePlugin {
 
-    private LocalConfiguration config;
+    public LocalConfiguration config;
 
     @Override
     public void enable() {
@@ -39,5 +40,7 @@ public class RCHomePlugin extends BasePlugin {
 
             super(plugin, "config.yml");
         }
+
+        @Setting("home-max-radius") public int homeRadius = 200;
     }
 }

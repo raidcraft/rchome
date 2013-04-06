@@ -33,6 +33,14 @@ public class RCHomeCommands {
         if(home == null) {
             throw new CommandException("Du hast noch kein Home gesetzt!");
         }
+
+        if(!player.hasPermission("rchome.home.everywhere")) {
+            int radius = RaidCraft.getComponent(RCHomePlugin.class).config.homeRadius;
+            if(home.distance(player.getLocation()) > radius) {
+                throw new CommandException("Du bist mehr als " + radius + " Blöcke von deinem Home entfernt!");
+            }
+        }
+
         player.teleport(home);
         player.sendMessage(ChatColor.GREEN + "Du wurdest an dein Home teleportiert!");
     }
@@ -45,6 +53,7 @@ public class RCHomeCommands {
     public void sethome(CommandContext context, CommandSender sender) throws CommandException {
 
         Player player = (Player)sender;
+        player.setBedSpawnLocation(player.getLocation(), true);
         RaidCraft.getTable(PlayerHomesTable.class).setHome(player);
         player.sendMessage(ChatColor.GREEN + "Dein Home wurde gesetzt!");
     }
