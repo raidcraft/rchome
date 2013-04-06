@@ -2,6 +2,9 @@ package de.raidcraft.rchome;
 
 import de.raidcraft.api.BasePlugin;
 import de.raidcraft.api.config.ConfigurationBase;
+import de.raidcraft.rchome.commands.RCHomeCommands;
+import de.raidcraft.rchome.listener.PlayerListener;
+import de.raidcraft.rchome.tables.PlayerHomesTable;
 
 /**
  * @author Philip
@@ -13,6 +16,9 @@ public class RCHomePlugin extends BasePlugin {
     @Override
     public void enable() {
 
+        registerCommands(RCHomeCommands.class);
+        registerEvents(new PlayerListener());
+        registerTable(PlayerHomesTable.class, new PlayerHomesTable());
         reload();
     }
 
