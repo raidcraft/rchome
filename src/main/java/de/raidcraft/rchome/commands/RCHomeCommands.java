@@ -4,8 +4,13 @@ import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandException;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
+import de.raidcraft.RaidCraft;
 import de.raidcraft.rchome.RCHomePlugin;
+import de.raidcraft.rchome.tables.PlayerHomesTable;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * @author Philip
@@ -23,7 +28,13 @@ public class RCHomeCommands {
     @CommandPermissions("rchome.cmd.home")
     public void home(CommandContext context, CommandSender sender) throws CommandException {
 
-
+        Player player = (Player)sender;
+        Location home = RaidCraft.getTable(PlayerHomesTable.class).getHome(player);
+        if(home == null) {
+            throw new CommandException("Du hast noch kein Home gesetzt!");
+        }
+        player.teleport(home);
+        player.sendMessage(ChatColor.GREEN + "Du wurdest an dein Home teleportiert!");
     }
 
     @Command(
@@ -33,6 +44,8 @@ public class RCHomeCommands {
     @CommandPermissions("rchome.cmd.sethome")
     public void sethome(CommandContext context, CommandSender sender) throws CommandException {
 
-
+        Player player = (Player)sender;
+        RaidCraft.getTable(PlayerHomesTable.class).setHome(player);
+        player.sendMessage(ChatColor.GREEN + "Dein Home wurde gesetzt!");
     }
 }
