@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -15,7 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
  */
 public class PlayerListener implements Listener {
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
     public void onPlayerInteract(PlayerInteractEvent event) {
 
         Player player = event.getPlayer();
@@ -28,11 +29,14 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        if(WorldGuardUtil.INST.isMember(player)) {
+        if (WorldGuardUtil.INST.isMember(player)) {
             player.setBedSpawnLocation(player.getLocation(), true);
             RaidCraft.getTable(PlayerHomesTable.class).setHome(player);
             player.sendMessage(ChatColor.GREEN + "Dein Home wurde gesetzt!");
             return;
+        } else {
+            // cancel the interact event to prevent setting the bed spawn location
+            event.setCancelled(true);
         }
         player.sendMessage(ChatColor.RED + "Du kannst dein Home nur auf eigenen Grundstücken setzen!");
     }
