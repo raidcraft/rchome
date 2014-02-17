@@ -6,6 +6,7 @@ import de.raidcraft.rchome.tables.PlayerHomesTable;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -25,7 +26,9 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        if(event.getClickedBlock() == null || event.getClickedBlock().getType() != Material.BED_BLOCK) {
+        if(event.getClickedBlock() == null 
+            || event.getClickedBlock().getType() != Material.BED_BLOCK
+            || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
 
