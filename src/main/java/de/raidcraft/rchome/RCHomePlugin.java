@@ -34,6 +34,11 @@ public class RCHomePlugin extends BasePlugin {
 
     }
 
+    public LocalConfiguration getConfig() {
+
+        return config;
+    }
+
     public class LocalConfiguration extends ConfigurationBase<RCHomePlugin> {
 
         public LocalConfiguration(RCHomePlugin plugin) {
@@ -42,5 +47,6 @@ public class RCHomePlugin extends BasePlugin {
         }
 
         @Setting("home-max-radius") public int homeRadius = 200;
+        @Setting("region-only-worlds") public String[] regionWorlds = new String[]{"world"};
     }
 }
