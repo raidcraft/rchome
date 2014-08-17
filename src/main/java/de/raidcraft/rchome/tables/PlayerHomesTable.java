@@ -25,7 +25,8 @@ public class PlayerHomesTable extends Table {
             getConnection().prepareStatement(
                     "CREATE TABLE `" + getTableName() + "` (\n" +
                             "`id` INT NOT NULL AUTO_INCREMENT ,\n" +
-                            "`player` VARCHAR( 32 ) NOT NULL ,\n" +
+                            "`player` VARCHAR( 32 ) ,\n" +
+                            "`player_id` VARCHAR( 40 ) ,\n" +
                             "`x` DOUBLE NOT NULL ,\n" +
                             "`y` DOUBLE NOT NULL ,\n" +
                             "`z` DOUBLE NOT NULL ,\n" +
@@ -43,7 +44,7 @@ public class PlayerHomesTable extends Table {
 
         try {
             ResultSet resultSet = getConnection().prepareStatement(
-                    "SELECT * FROM " + getTableName() + " WHERE player = '" + player.getName() + "' " +
+                    "SELECT * FROM " + getTableName() + " WHERE player_id = '" + player.getUniqueId() + "' " +
                             "AND world = '" + player.getLocation().getWorld().getName() + "';").executeQuery();
 
             while (resultSet.next()) {
@@ -65,9 +66,10 @@ public class PlayerHomesTable extends Table {
 
         deleteHome(player);
         try {
-            getConnection().prepareStatement("INSERT INTO " + getTableName() + " (player, x, y, z, pitch, yaw, world) " +
+            getConnection().prepareStatement("INSERT INTO "
+                    + getTableName() + " (player_id, x, y, z, pitch, yaw, world) " +
                     "VALUES (" +
-                    "'" + player.getName() + "'" + "," +
+                    "'" + player.getUniqueId() + "'" + "," +
                     "'" + player.getLocation().getX() + "'" + "," +
                     "'" + player.getLocation().getY() + "'" + "," +
                     "'" + player.getLocation().getZ() + "'" + "," +
@@ -85,7 +87,7 @@ public class PlayerHomesTable extends Table {
 
         try {
             getConnection().prepareStatement(
-                    "DELETE FROM " + getTableName() + " WHERE player = '" + player.getName() + "' " +
+                    "DELETE FROM " + getTableName() + " WHERE player_id = '" + player.getUniqueId() + "' " +
                             "AND world = '" + player.getLocation().getWorld().getName() + "';").execute();
         } catch (SQLException e) {
             RaidCraft.LOGGER.warning(e.getMessage());
