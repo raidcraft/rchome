@@ -5,7 +5,10 @@ import de.raidcraft.api.config.ConfigurationBase;
 import de.raidcraft.api.config.Setting;
 import de.raidcraft.rchome.commands.RCHomeCommands;
 import de.raidcraft.rchome.listener.PlayerListener;
-import de.raidcraft.rchome.tables.PlayerHomesTable;
+import de.raidcraft.rchome.tables.TPlayerHome;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Philip
@@ -19,7 +22,6 @@ public class RCHomePlugin extends BasePlugin {
 
         registerCommands(RCHomeCommands.class);
         registerEvents(new PlayerListener());
-        registerTable(PlayerHomesTable.class, new PlayerHomesTable());
         reload();
     }
 
@@ -32,6 +34,13 @@ public class RCHomePlugin extends BasePlugin {
     @Override
     public void disable() {
 
+    }
+
+    @Override
+    public List<Class<?>> getDatabaseClasses() {
+        List<Class<?>> classes = new ArrayList<>();
+        classes.add(TPlayerHome.class);
+        return classes;
     }
 
     public LocalConfiguration getConfig() {

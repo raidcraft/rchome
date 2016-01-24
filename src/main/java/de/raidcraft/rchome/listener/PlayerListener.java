@@ -3,7 +3,7 @@ package de.raidcraft.rchome.listener;
 import de.raidcraft.RaidCraft;
 import de.raidcraft.rchome.RCHomePlugin;
 import de.raidcraft.rchome.WorldGuardUtil;
-import de.raidcraft.rchome.tables.PlayerHomesTable;
+import de.raidcraft.rchome.tables.TPlayerHome;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -38,7 +38,7 @@ public class PlayerListener implements Listener {
         boolean regionOnly = Arrays.asList(RaidCraft.getComponent(RCHomePlugin.class).getConfig().regionWorlds).contains(player.getWorld().getName());
         if (!regionOnly || WorldGuardUtil.INST.isMember(player)) {
             player.setBedSpawnLocation(player.getLocation(), true);
-            RaidCraft.getTable(PlayerHomesTable.class).setHome(player);
+            TPlayerHome.setHome(player);
             player.sendMessage(ChatColor.GREEN + "Dein Home wurde gesetzt!");
             return;
         } else {

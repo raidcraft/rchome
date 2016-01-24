@@ -6,7 +6,7 @@ import com.sk89q.minecraft.util.commands.CommandException;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
 import de.raidcraft.RaidCraft;
 import de.raidcraft.rchome.RCHomePlugin;
-import de.raidcraft.rchome.tables.PlayerHomesTable;
+import de.raidcraft.rchome.tables.TPlayerHome;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -29,7 +29,7 @@ public class RCHomeCommands {
     public void home(CommandContext context, CommandSender sender) throws CommandException {
 
         Player player = (Player)sender;
-        Location home = RaidCraft.getTable(PlayerHomesTable.class).getHome(player);
+        Location home = TPlayerHome.getHome(player);
         if(home == null) {
             throw new CommandException("Du hast noch kein Home gesetzt!");
         }
@@ -54,7 +54,7 @@ public class RCHomeCommands {
 
         Player player = (Player)sender;
         player.setBedSpawnLocation(player.getLocation(), true);
-        RaidCraft.getTable(PlayerHomesTable.class).setHome(player);
+        TPlayerHome.setHome(player);
         player.sendMessage(ChatColor.GREEN + "Dein Home wurde gesetzt!");
     }
 }
