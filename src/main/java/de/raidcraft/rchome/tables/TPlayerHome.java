@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
@@ -33,6 +34,8 @@ public class TPlayerHome {
     private float pitch;
     private float yaw;
     private String world;
+    @Version
+    private Long version;
 
     public static Location getHome(Player player) {
 
